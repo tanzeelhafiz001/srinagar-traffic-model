@@ -1,0 +1,4 @@
+timestamp,corridor_id,corridor_name,distance_km,normal_duration_min,traffic_duration_min,delay_ratio,temperature_c,humidity_pct,weather_condition,rain_1h_mm
+2026-08-31 15:55:42,1,Lal Chowk to Hyderpora,7.09,19.33,17.33,0.9,25.59,64,Clouds,0
+2026-08-31 15:55:42,2,Dalgate to Pantha Chowk,7.79,19.97,19.12,0.96,25.59,64,Clouds,0
+2026-08-31 15:55:42,3,Jahangir Chowk to Parimpora,6.27,12.13,11.88,0.98,25.59,64,Clouds,0

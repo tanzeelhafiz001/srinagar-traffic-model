@@ -7,11 +7,11 @@ import requests
 GOOGLE_MAPS_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 OPENWEATHER_KEY = os.environ.get('OPENWEATHER_API_KEY')
 
-# Define the 3 Srinagar Traffic Corridors
+# Standardized 7-8 km Srinagar Traffic Corridors
 CORRIDORS = [
     {"id": 1, "name": "Lal Chowk to Hyderpora", "origin": "Lal Chowk, Srinagar", "destination": "Hyderpora, Srinagar"},
-    {"id": 2, "name": "Lal Chowk to Dalgate", "origin": "Lal Chowk, Srinagar", "destination": "Dalgate, Srinagar"},
-    {"id": 3, "name": "Soura to Lal Chowk", "origin": "Soura, Srinagar", "destination": "Lal Chowk, Srinagar"}
+    {"id": 2, "name": "Dalgate to Pantha Chowk", "origin": "Dalgate, Srinagar", "destination": "Pantha Chowk, Srinagar"},
+    {"id": 3, "name": "Jahangir Chowk to Parimpora", "origin": "Jahangir Chowk, Srinagar", "destination": "Parimpora, Srinagar"}
 ]
 
 # File where dataset will be logged

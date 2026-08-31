@@ -8,3 +8,6 @@ timestamp,corridor_id,corridor_name,distance_km,normal_duration_min,traffic_dura
 2026-09-01 00:34:31,1,Lal Chowk to Hyderpora,7.09,19.33,15.23,0.79,-0.21,Free Flow,0,Tuesday,0,0,22.81,71,Clouds,0
 2026-09-01 00:34:31,2,Dalgate to Pantha Chowk,7.79,19.97,14.15,0.71,-0.29,Free Flow,0,Tuesday,0,0,22.81,71,Clouds,0
 2026-09-01 00:34:31,3,Jahangir Chowk to Parimpora,6.27,15.6,9.98,0.64,-0.36,Free Flow,0,Tuesday,0,0,22.81,71,Clouds,0
+2026-09-01 01:34:34,1,Lal Chowk to Hyderpora,7.09,19.33,15.13,0.78,-0.22,Free Flow,1,Tuesday,0,0,23.36,72,Clouds,0
+2026-09-01 01:34:34,2,Dalgate to Pantha Chowk,7.79,19.97,14.02,0.7,-0.3,Free Flow,1,Tuesday,0,0,23.36,72,Clouds,0
+2026-09-01 01:34:34,3,Jahangir Chowk to Parimpora,6.27,15.6,9.7,0.62,-0.38,Free Flow,1,Tuesday,0,0,23.36,72,Clouds,0

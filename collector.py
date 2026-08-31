@@ -1,6 +1,6 @@
 import os
 import csv
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import requests
 
 # Retrieve API keys from GitHub Secrets
@@ -14,7 +14,6 @@ CORRIDORS = [
     {"id": 3, "name": "Jahangir Chowk to Parimpora", "origin": "Jahangir Chowk, Srinagar", "destination": "Parimpora, Srinagar"}
 ]
 
-# File where dataset will be logged
 CSV_FILE = "traffic_data.csv"
 
 def get_weather():
@@ -43,7 +42,6 @@ def get_traffic_data(origin, destination):
                 normal_duration_s = element["duration"]["value"]
                 in_traffic_duration_s = element.get("duration_in_traffic", {}).get("value", normal_duration_s)
                 
-                # Calculate delay ratio
                 delay_ratio = round(in_traffic_duration_s / normal_duration_s, 2) if normal_duration_s > 0 else 1.0
                 
                 return {
@@ -56,29 +54,69 @@ def get_traffic_data(origin, destination):
         print(f"Traffic API Error: {e}")
     return {"distance_km": None, "normal_duration_min": None, "traffic_duration_min": None, "delay_ratio": None}
 
+def classify_congestion(delay_ratio):
+    if delay_ratio is None:
+        return "Unknown"
+    if delay_ratio <= 1.05:
+        return "Free Flow"
+    elif delay_ratio <= 1.25:
+        return "Light"
+    elif delay_ratio <= 1.50:
+        return "Moderate"
+    elif delay_ratio <= 1.80:
+        return "Heavy"
+    else:
+        return "Severe"
+
+def check_peak_hour_srinagar(dt):
+    # Srinagar Rush Hours: Morning 8:30 AM - 10:30 AM | Evening 5:00 PM - 7:30 PM IST
+    time_decimal = dt.hour + (dt.minute / 60.0)
+    if (8.5 <= time_decimal <= 10.5) or (17.0 <= time_decimal <= 19.5):
+        return 1
+    return 0
+
 def main():
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    weather = get_weather()
+    # Set execution timestamp strictly to Indian Standard Time (IST, UTC+5:30)
+    ist_tz = timezone(timedelta(hours=5, minutes=30))
+    now_ist = datetime.now(ist_tz)
     
+    timestamp_str = now_ist.strftime("%Y-%m-%d %H:%M:%S")
+    hour_of_day = now_ist.hour
+    day_of_week = now_ist.strftime("%A")
+    
+    # Localized Kashmir traffic feature: Sunday is rest day (1), all other days (0)
+    is_sunday = 1 if now_ist.weekday() == 6 else 0
+    is_peak_hour = check_peak_hour_srinagar(now_ist)
+    
+    weather = get_weather()
     file_exists = os.path.isfile(CSV_FILE)
     
     with open(CSV_FILE, mode="a", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         
-        # Write CSV header if file is being created for the first time
+        # Write header if file is newly created
         if not file_exists:
             writer.writerow([
                 "timestamp", "corridor_id", "corridor_name", 
-                "distance_km", "normal_duration_min", "traffic_duration_min", "delay_ratio",
+                "distance_km", "normal_duration_min", "traffic_duration_min", 
+                "delay_ratio", "congestion_index", "congestion_level",
+                "hour_of_day", "day_of_week", "is_sunday", "is_peak_hour",
                 "temperature_c", "humidity_pct", "weather_condition", "rain_1h_mm"
             ])
             
         for c in CORRIDORS:
             traffic = get_traffic_data(c["origin"], c["destination"])
+            delay_ratio = traffic["delay_ratio"]
+            
+            congestion_index = round(delay_ratio - 1.0, 2) if delay_ratio is not None else None
+            congestion_lvl = classify_congestion(delay_ratio)
+            
             writer.writerow([
-                timestamp, c["id"], c["name"],
+                timestamp_str, c["id"], c["name"],
                 traffic["distance_km"], traffic["normal_duration_min"], 
-                traffic["traffic_duration_min"], traffic["delay_ratio"],
+                traffic["traffic_duration_min"], delay_ratio,
+                congestion_index, congestion_lvl,
+                hour_of_day, day_of_week, is_sunday, is_peak_hour,
                 weather["temp"], weather["humidity"], 
                 weather["weather_main"], weather["rain_1h"]
             ])

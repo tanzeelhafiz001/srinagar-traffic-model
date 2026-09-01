@@ -1,0 +1,4 @@
+timestamp_ist,hour_of_day,day_of_week,is_peak_hour,corridor_id,corridor_name,route_status,traffic_data_status,weather_api_status,distance_km,reference_duration_min,actual_duration_min,reference_speed_kmh,actual_speed_kmh,delay_ratio,congestion_index,temperature_c,humidity_pct,weather_condition,rain_1h_mm
+2026-09-01 11:05:56,11,Tuesday,0,1,Lal Chowk to Hyderpora,HTTP_ERROR_HTTPError,UNAVAILABLE,OK,,,,,,,,24.47,73,Rain,0.36
+2026-09-01 11:05:56,11,Tuesday,0,2,Dalgate to Pantha Chowk,HTTP_ERROR_HTTPError,UNAVAILABLE,OK,,,,,,,,24.47,73,Rain,0.36
+2026-09-01 11:05:56,11,Tuesday,0,3,Jahangir Chowk to Parimpora,HTTP_ERROR_HTTPError,UNAVAILABLE,OK,,,,,,,,24.47,73,Rain,0.36

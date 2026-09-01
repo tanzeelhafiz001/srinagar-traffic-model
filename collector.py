@@ -8,30 +8,52 @@ import requests
 GOOGLE_MAPS_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 OPENWEATHER_KEY = os.environ.get('OPENWEATHER_API_KEY')
 
-# Standardized ~7 km Srinagar Traffic Corridors
+# Standardized Srinagar Traffic Corridors using Exact GPS Coordinates
 CORRIDORS = [
-    {"id": 1, "name": "Lal Chowk to Hyderpora", "origin": "Lal Chowk, Srinagar", "destination": "Hyderpora, Srinagar"},
-    {"id": 2, "name": "Dalgate to Pantha Chowk", "origin": "Dalgate, Srinagar", "destination": "Pantha Chowk, Srinagar"},
-    {"id": 3, "name": "Jahangir Chowk to Parimpora", "origin": "Jahangir Chowk, Srinagar", "destination": "Parimpora, Srinagar"}
+    {
+        "id": 1, 
+        "name": "Lal Chowk to Hyderpora", 
+        "origin_lat": 34.0728, "origin_lng": 74.8053,
+        "dest_lat": 34.0360, "dest_lng": 74.7875
+    },
+    {
+        "id": 2, 
+        "name": "Dalgate to Pantha Chowk", 
+        "origin_lat": 34.0844, "origin_lng": 74.8256,
+        "dest_lat": 34.0325, "dest_lng": 74.8640
+    },
+    {
+        "id": 3, 
+        "name": "Jahangir Chowk to Parimpora", 
+        "origin_lat": 34.0728, "origin_lng": 74.8028,
+        "dest_lat": 34.0933, "dest_lng": 74.7550
+    }
 ]
 
-# File definitions for dual API output
 RAW_DIST_CSV = "raw_distance_api.csv"
 ENRICHED_DIST_CSV = "enriched_distance_api.csv"
 RAW_ROUTES_CSV = "raw_routes_api.csv"
 ENRICHED_ROUTES_CSV = "enriched_routes_api.csv"
 
 def fetch_with_retry(url, method="GET", json_payload=None, headers=None, max_attempts=3, timeout=15):
-    """Executes HTTP GET/POST requests with retry logic and HTTP status validation."""
+    """Executes HTTP GET/POST requests with retry logic and detailed error logging."""
     for attempt in range(1, max_attempts + 1):
         try:
             if method == "POST":
                 res = requests.post(url, json=json_payload, headers=headers, timeout=timeout)
             else:
                 res = requests.get(url, headers=headers, timeout=timeout)
-            res.raise_for_status()
+            
+            if res.status_code != 200:
+                print(f"API Error ({res.status_code}) on attempt {attempt}: {res.text}")
+                if attempt == max_attempts:
+                    return None, f"HTTP_{res.status_code}"
+                time.sleep(2)
+                continue
+                
             return res.json(), "OK"
         except requests.exceptions.RequestException as e:
+            print(f"Network Exception on attempt {attempt}: {e}")
             if attempt == max_attempts:
                 return None, f"HTTP_ERROR_{type(e).__name__}"
             time.sleep(2)
@@ -53,8 +75,8 @@ def get_weather():
         "temp": None, "humidity": None, "weather_main": None, "rain_1h": None
     }
 
-def get_distance_matrix_data(origin, destination):
-    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={origin}&destinations={destination}&departure_time=now&key={GOOGLE_MAPS_KEY}"
+def get_distance_matrix_data(c):
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={c['origin_lat']},{c['origin_lng']}&destinations={c['dest_lat']},{c['dest_lng']}&departure_time=now&key={GOOGLE_MAPS_KEY}"
     data, http_status = fetch_with_retry(url)
     
     if not data:
@@ -119,7 +141,7 @@ def get_distance_matrix_data(origin, destination):
         "actual_speed_kmh": None, "delay_ratio": None
     }
 
-def get_routes_api_data(origin, destination):
+def get_routes_api_data(c):
     url = "https://routes.googleapis.com/directions/v2:computeRoutes"
     headers = {
         "Content-Type": "application/json",
@@ -127,8 +149,22 @@ def get_routes_api_data(origin, destination):
         "X-Goog-FieldMask": "routes.duration,routes.staticDuration,routes.distanceMeters"
     }
     payload = {
-        "origin": {"address": origin},
-        "destination": {"address": destination},
+        "origin": {
+            "location": {
+                "latLng": {
+                    "latitude": c["origin_lat"],
+                    "longitude": c["origin_lng"]
+                }
+            }
+        },
+        "destination": {
+            "location": {
+                "latLng": {
+                    "latitude": c["dest_lat"],
+                    "longitude": c["dest_lng"]
+                }
+            }
+        },
         "travelMode": "DRIVE",
         "routingPreference": "TRAFFIC_AWARE_OPTIMAL"
     }
@@ -249,9 +285,9 @@ def main():
     for c in CORRIDORS:
         c_id = str(c["id"])
         
-        # 1. Process Distance Matrix API
+        # 1. Process Distance Matrix API (GPS-locked)
         if (c_id, current_hour_slot) not in existing_dist_slots:
-            traffic_dist = get_distance_matrix_data(c["origin"], c["destination"])
+            traffic_dist = get_distance_matrix_data(c)
             delay_ratio = traffic_dist["delay_ratio"]
             ci = round(delay_ratio - 1.0, 3) if delay_ratio is not None else None
             
@@ -267,9 +303,9 @@ def main():
             dist_raw_rows.append(raw_row)
             dist_enriched_rows.append(enriched_row)
 
-        # 2. Process Routes API (v2)
+        # 2. Process Routes API v2 (GPS-locked)
         if (c_id, current_hour_slot) not in existing_routes_slots:
-            traffic_routes = get_routes_api_data(c["origin"], c["destination"])
+            traffic_routes = get_routes_api_data(c)
             delay_ratio = traffic_routes["delay_ratio"]
             ci = round(delay_ratio - 1.0, 3) if delay_ratio is not None else None
             
@@ -287,7 +323,7 @@ def main():
             
     write_data(RAW_DIST_CSV, ENRICHED_DIST_CSV, dist_raw_rows, dist_enriched_rows)
     write_data(RAW_ROUTES_CSV, ENRICHED_ROUTES_CSV, routes_raw_rows, routes_enriched_rows)
-    print(f"Logged dual API data for slot: {current_hour_slot}")
+    print(f"Logged GPS-locked dual API data for slot: {current_hour_slot}")
 
 if __name__ == "__main__":
     main()

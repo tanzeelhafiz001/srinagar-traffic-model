@@ -188,3 +188,6 @@ timestamp_ist,corridor_id,corridor_name,route_status,traffic_data_status,weather
 2026-09-05 08:09:40,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.88,11.3,25.12,33.08,0.759,-0.241,19.47,73,Clear,0
 2026-09-05 08:09:40,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.38,18.35,26.53,29.46,0.9,-0.1,19.47,73,Clear,0
 2026-09-05 08:09:40,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,9.38,19.2,16.45,29.31,34.21,0.857,-0.143,19.47,73,Clear,0
+2026-09-05 09:09:49,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.88,13.82,25.12,27.05,0.929,-0.071,21.7,66,Clear,0
+2026-09-05 09:09:49,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.38,20.62,26.53,26.22,1.012,0.012,21.7,66,Clear,0
+2026-09-05 09:09:49,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,9.38,19.2,18.75,29.31,30.02,0.977,-0.023,21.7,66,Clear,0

@@ -383,3 +383,6 @@ timestamp_ist,hour_of_day,day_of_week,is_peak_hour,corridor_id,corridor_name,rou
 2026-09-08 22:12:04,22,Tuesday,0,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.83,10.75,25.21,34.77,0.725,-0.275,20.03,70,Clear,0
 2026-09-08 22:12:04,22,Tuesday,0,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,17.23,26.31,31.38,0.838,-0.162,20.03,70,Clear,0
 2026-09-08 22:12:04,22,Tuesday,0,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,8.45,21.05,16.22,24.09,31.26,0.771,-0.229,20.03,70,Clear,0
+2026-09-09 06:16:36,6,Wednesday,0,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.83,10.27,25.21,36.4,0.693,-0.307,15.03,87,Clear,0
+2026-09-09 06:16:36,6,Wednesday,0,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,13.87,26.31,38.98,0.675,-0.325,15.03,87,Clear,0
+2026-09-09 06:16:36,6,Wednesday,0,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,8.45,21.05,15.63,24.09,32.44,0.743,-0.257,15.03,87,Clear,0

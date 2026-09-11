@@ -27,7 +27,15 @@ CORRIDORS = [
         "name": "Jahangir Chowk to Parimpora",
         "origin_lat": 34.0718, "origin_lng": 74.8023,  # Jahangir Chowk Flyover Junction
         "dest_lat": 34.0882, "dest_lng": 74.7554       # Parimpora Fruit Mandi Bypass Junction
-    }
+    },
+    {
+    "id": 4,
+    "name": "Hyderpora to Srinagar Airport",
+    "origin_lat": 34.0326,
+    "origin_lng": 74.7937,
+    "dest_lat": 33.9872,
+    "dest_lng": 74.7741
+}
 ]
 
 RAW_DIST_CSV = "raw_distance_api.csv"

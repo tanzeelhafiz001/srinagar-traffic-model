@@ -574,3 +574,7 @@ timestamp_ist,hour_of_day,day_of_week,is_peak_hour,corridor_id,corridor_name,rou
 2026-09-12 13:08:30,13,Saturday,0,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,22.72,26.31,23.79,1.106,0.106,28.36,48,Clear,0
 2026-09-12 13:08:30,13,Saturday,0,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,9.38,19.47,21.95,28.91,25.64,1.127,0.127,28.36,48,Clear,0
 2026-09-12 13:08:30,13,Saturday,0,4,Hyderpora to Srinagar Airport,OK,AVAILABLE,OK,7.45,19.02,19.72,23.5,22.67,1.037,0.037,28.36,48,Clear,0
+2026-09-12 14:10:53,14,Saturday,0,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.83,16.5,25.21,22.65,1.113,0.113,29.47,45,Clear,0
+2026-09-12 14:10:53,14,Saturday,0,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,23.53,26.31,22.97,1.145,0.145,29.47,45,Clear,0
+2026-09-12 14:10:53,14,Saturday,0,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,9.38,19.47,21.22,28.91,26.52,1.09,0.09,29.47,45,Clear,0
+2026-09-12 14:10:53,14,Saturday,0,4,Hyderpora to Srinagar Airport,OK,AVAILABLE,OK,7.45,19.02,19.65,23.5,22.75,1.033,0.033,29.47,45,Clear,0

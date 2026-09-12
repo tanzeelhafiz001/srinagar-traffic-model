@@ -546,3 +546,7 @@ timestamp_ist,corridor_id,corridor_name,route_status,traffic_data_status,weather
 2026-09-12 06:13:32,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,14.5,26.31,37.28,0.706,-0.294,15.59,93,Clear,0
 2026-09-12 06:13:32,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,8.45,21.05,15.1,24.09,33.58,0.717,-0.283,15.59,93,Clear,0
 2026-09-12 06:13:32,4,Hyderpora to Srinagar Airport,OK,AVAILABLE,OK,7.45,19.02,16.65,23.5,26.85,0.875,-0.125,15.59,93,Clear,0
+2026-09-12 07:09:14,1,Lal Chowk to Hyderpora,OK,AVAILABLE,OK,6.23,14.83,9.98,25.21,37.45,0.673,-0.327,16.14,92,Clear,0
+2026-09-12 07:09:14,2,Dalgate to Pantha Chowk,OK,AVAILABLE,OK,9.01,20.55,14.68,26.31,36.83,0.714,-0.286,16.14,92,Clear,0
+2026-09-12 07:09:14,3,Jahangir Chowk to Parimpora,OK,AVAILABLE,OK,8.45,21.05,14.98,24.09,33.85,0.712,-0.288,16.14,92,Clear,0
+2026-09-12 07:09:14,4,Hyderpora to Srinagar Airport,OK,AVAILABLE,OK,7.45,19.02,16.57,23.5,26.98,0.871,-0.129,16.14,92,Clear,0
